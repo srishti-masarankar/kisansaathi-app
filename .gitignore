@@ -7,3 +7,5 @@ venv/
 uploads/
 *.log
 .vscode/
+docs/
+index/

@@ -22,6 +22,7 @@ packaging==26.3
 pillow==12.3.0
 pydantic==2.14.1
 pydantic_core==2.50.1
+pypdf==6.20.1
 python-multipart==0.0.32
 PyYAML==6.0.3
 safetensors==0.8.0
