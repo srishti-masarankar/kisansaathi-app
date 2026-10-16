@@ -33,3 +33,18 @@ def ask_llm(question, disease=None, facts=None):
             return json.load(r)["message"]["content"].strip()
     except Exception:
         return "The advisor is not available. Make sure Ollama is running, then try again."
+
+def ask_rag(question, disease=None):
+    try:
+        import rag
+        query = f"{disease.replace('___', ' ').replace('_', ' ')} {question}" if disease else question
+        hits = [h for h in rag.search(query, k=3) if h["score"] >= 0.5]
+    except Exception:
+        hits = []
+    facts = [h["text"] for h in hits]
+    answer = ask_llm(question, disease=disease, facts=facts or None)
+    sources = []
+    for h in hits:
+        if h["source"] not in sources:
+            sources.append(h["source"])
+    return {"answer": answer, "sources": sources}
